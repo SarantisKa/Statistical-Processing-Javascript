@@ -1,0 +1,134 @@
+<html>
+
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" type="text/css" href="lab_4.css">
+<link rel="stylesheet" href= "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+<link href="https://fonts.googleapis.com/css?family=Roboto:400,900|Space+Mono:400,700" rel="stylesheet"> 
+<link href="https://fonts.googleapis.com/css?family=Old+Standard+TT:400,400i,700&amp;subset=cyrillic,cyrillic-ext,latin-ext,vietnamese" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.4.1/jspdf.debug.js" integrity="sha384-THVO/sM0mFD9h7dfSndI6TS0PgAGavwKvB5hAxRRvc0o9cPLohB0wb/PTA7LdUHs" crossorigin="anonymous"></script>
+
+<title>Statistical Processing</title> 
+</head>
+<div id="page-wrap">
+
+<h1 id="header">Statistical Processing</h1>    
+
+<div id="top">
+    <div id="par">
+    <ul>
+    <li>Η σελίδα προσαρμόζεται ανάλογα με τo μέγεθος της οθόνη της συσκευής του χρήστη.</li>
+    <li>Load/Save: Μπορείτε να αποθηκεύσετε μόνο ένα πίνακα. Δεν υπάρχει η δυνατότητα αποθήκευσης διαφορετικών πινάκων</li>
+    <li>Χρησιμοποιήστε το πλήκτρο enter μέσα στα input field για να  μεταφέρεστε αυτόματα στο επόμενο</li>
+    <li>Export pdf: εξαγωγή του πίνακα σε pdf</li>
+    <li>Ο γράφος ταξινομεί αυτόματα τον πινάκα σύμφωνα με την επιλογή (Χ)</li>
+    </ul>
+    </div>
+
+
+<!--------------------Table 0ptions----------->
+<div id="OptTable">
+<div id="options">
+<label>Table Options:</label>
+<button id="newButton"  onclick= "newTable(); createChart();">New</button>
+<button id="DefaultButton">Default</button>   
+<button id="loadButton">Load</button> 
+<button id="saveButton">Save</button>
+<button id="exportButton">Export PDF</button>
+</div>    
+
+    
+<!-------------TABLE---------------------->
+<div id="table">  
+<table class="uomTable">
+     <caption id="caption">UoMtable (Default)</caption>
+     <thead>
+       <tr><td id ="td0">Height</td><td id ="td1">Score</td><td id ="td2">Income</td><td id ="td3">Age</td></tr>
+    </thead>
+    <tbody id="tbody">
+      <tr><td>101</td><td>87.7</td><td>12000</td><td>29</td></tr>
+      <tr><td>220</td><td>97.1</td><td>10200</td><td>25</td></tr>
+      <tr><td>301</td><td>58.2</td><td>17100</td><td>31</td></tr>
+      <tr><td>421</td><td>34.4</td><td>13000</td><td>25</td></tr>
+      <tr><td>424</td><td>66.6</td><td>14500</td><td>35</td></tr>
+   </tbody>
+   <tfoot>
+  </tfoot>
+</table> 
+</div>
+</div>
+<img alt="statistics" src="img/statistic.jpg">
+</div>
+
+
+<!--------Chart Options---------------------------->    
+<div id="bottom">
+<div id="ChartOptions">
+<div class="OptionsB">
+<label>Chart Options:</label>
+<button id="chartButton">Create Chart</button>
+</div>
+<div class="OptionsB">
+<label>Select X:</label>
+<select id="selectX" onchange="sort()">
+  <option id="XOption0" value="0" selected='selected'></option>
+  <option id="XOption1" value="1"></option>
+  <option id="XOption2" value="3"></option>
+  <option id="XOption3" value="4"></option>
+</select>
+</div>
+<div class="OptionsB">
+<label>Select Y:</label>
+<select id="selectY" onchange="sort()">
+  <option id="YOption0" value="0" ></option>
+  <option id="YOption1" value="1" selected='selected'></option>
+  <option id="YOption2" value="2" ></option>
+  <option id="YOption3" value="3" ></option>
+</select>
+</div>
+<div class="OptionsB">
+<label>Sort Table by X Option</label>
+<input id="checkbox" type="checkbox" onchange="sort()" name="sort" checked><br>
+</div>
+</div>
+    
+<div id="chartContainer" style="height: 300px; width: 60%;"></div>
+</div>
+</div>
+
+<!---------SOURCE SCRIPTS------------->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>     
+<script src="uomTables.js"></script>
+<script src="storage.js"></script>
+<script src="graphs.js"></script>
+<script src="exrportPdf.js"></script>
+
+<!----------New Table Form---------------------->
+<div id="form" style="display: none">
+<br><label>Select table name:</label><br>
+<input type="text" id="nameIn" value="" onkeydown="javascript:if (event.keyCode == 13) document.getElementById('in0').focus()"><br>
+<label>Select columns names:</label>
+<form>
+  column 1:<br>
+  <input type="text" id="in0" onfocus="this.select();" value="Height" onkeydown="javascript:if (event.keyCode == 13) document.getElementById('in1').focus()"><br>
+  column 2:<br>
+  <input type="text" id="in1" onfocus="this.select();" value="Score" onkeydown="javascript:if (event.keyCode == 13) document.getElementById('in2').focus()"><br>
+  column 3:<br>
+  <input type="text" id="in2" onfocus="this.select();" value="Income" onkeydown="javascript:if (event.keyCode == 13) document.getElementById('in3').focus()"><br>
+  column 4:<br>
+  <input type="text" id="in3" onfocus="this.select();" value="Age" onkeydown="javascript:if (event.keyCode == 13) document.getElementById('nameSub').click()"><br>
+  Delete input values<br>
+  <input id="checkboxDelete" type="checkbox" name="sort" checked><br><br>
+  <button type='button' id="nameSub">Submit</button>
+  <button type='button' id="cansel" onclick=" canselform();">Cansel</button>
+</form>
+    <script>
+    function canselform(){
+    var form = document.getElementById("form");
+    form.style.display = "none";
+  }
+  </script>
+</div>
+</html>
